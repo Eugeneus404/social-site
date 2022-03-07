@@ -11,17 +11,31 @@ const Form = () => {
     if (name == '' || password == '') {
        return;
     }
-   e.preventDefault();
-   const data = {
-     name,
-     password,
-   };
 
-   fetch('/api/formData', {
-     method: 'post',
-     body: JSON.stringify(data),
-   })
- };
+  new Promise ( () => checkUsers() )
+  .then( () => {
+    e.preventDefault();
+    const data = {
+      name,
+      password,
+    };
+
+    fetch('/api/formData', {
+      method: 'post',
+      body: JSON.stringify(data),
+    })
+  });
+
+
+
+
+ const checkUsers = async () => {
+   const users = await fetch('/api/formData', {
+     method: 'get'
+   });
+   const usersFf = await users.text();
+   alert(usersFf);
+ }
 
   return (
     <LoginForm>
