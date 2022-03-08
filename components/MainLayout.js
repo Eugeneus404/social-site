@@ -4,6 +4,7 @@ import {Container, Rights} from '../styles/Container';
 
 
 const MainLayout = ({children, title = 'SC'}) => {
+
   return (
     <>
     <GlobalStyle/>

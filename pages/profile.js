@@ -5,7 +5,7 @@ import {Text} from '../components/TextInProfile';
 const Profile = () => {
   return (
     <MainLayout title={'Profile'}>
-      <Text/>
+      <Text name="Новый пользователь"/>
     </MainLayout>
   )
 }

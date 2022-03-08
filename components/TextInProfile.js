@@ -3,7 +3,7 @@ import {TextContainer} from '../styles/Container';
 import {ImageContainer, Image, About} from '../styles/Profile';
 import {ButtonContainer, Button, ButtonContent} from '../styles/Button';
 
-const Text = () => {
+const Text = (props) => {
   return (
     <>
       <ButtonContainer>
@@ -20,7 +20,7 @@ const Text = () => {
           <p>Laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolorm.</p>
         </About>
          <div>
-          <h2>Виталий Андреев</h2>
+          <h2>{props.name}</h2>
         </div>
       </TextContainer>
     </>

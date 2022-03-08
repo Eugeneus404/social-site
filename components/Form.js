@@ -1,41 +1,50 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import Router from 'next/router';
 import {LoginForm, Welcome, Input, FlexBox} from '../styles/Login';
 import {ButtonContainer, Button, ButtonContent} from '../styles/Button';
+import {Alert} from './Alert'
 
 const Form = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [state, setState] = useState(1);
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     if (name == '' || password == '') {
-       return;
+      setState(2);
+      setTimeout(() => setState(1), 1600)
+      return;
     }
 
-  new Promise ( () => checkUsers() )
-  .then( () => {
-    e.preventDefault();
-    const data = {
-      name,
-      password,
-    };
+   e.preventDefault();
 
-    fetch('/api/formData', {
-      method: 'post',
-      body: JSON.stringify(data),
-    })
-  });
+   const data = {
+     name,
+     password,
+   };
 
-
-
-
- const checkUsers = async () => {
-   const users = await fetch('/api/formData', {
-     method: 'get'
+   const users = await fetch('/api/allUsers', {
+     method: 'post',
+     body: JSON.stringify(data)
    });
-   const usersFf = await users.text();
-   alert(usersFf);
- }
+     if (users.status === 202) {
+       setState(3);
+       setTimeout(() => setState(1), 1600)
+       return;
+     }
+
+   const helloUser = await fetch('/api/newUser', {
+     method: 'post',
+     body: JSON.stringify(data),
+   })
+
+   if (helloUser.status === 200) {
+     const username = data.name;
+     Router.push('/profile');
+   }
+ };
+ 
 
   return (
     <LoginForm>
@@ -50,6 +59,7 @@ const Form = () => {
       </FlexBox>
       <FlexBox>
         <Button onClick={handleSubmit}><ButtonContent>Создать!</ButtonContent></Button>
+        <Alert isHidden={state}/>
       </FlexBox>
     </LoginForm>
   )
