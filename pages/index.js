@@ -1,13 +1,14 @@
 import {MainLayout} from '../components/MainLayout';
-import {Form} from '../components/Form';
+import {FormLogin} from '../components/FormLogin';
 
 
-const Index = () => {
+
+const Login = () => {
   return (
     <MainLayout title={'Login'}>
-      <Form/>
+      <FormLogin/>
     </MainLayout>
   )
 }
 
-export default Index
+export default Login

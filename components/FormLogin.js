@@ -3,10 +3,10 @@ import { useState } from 'react';
 import Router from 'next/router';
 import {LoginForm, Welcome, Input, FlexBox} from '../styles/Login';
 import {ButtonContainer, Button, ButtonContent} from '../styles/Button';
-import {Alert} from './Alert';
+import {AlertLogin} from './Alert';
 import {SuggestWindow} from '../styles/Suggest';
 
-const Form = () => {
+const FormLogin = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [state, setState] = useState(1);
@@ -25,23 +25,18 @@ const Form = () => {
      password,
    };
 
-   const users = await fetch('/api/allUsers', {
+   const users = await fetch('/api/loginUser', {
      method: 'post',
      body: JSON.stringify(data)
    });
-     if (users.status === 202) {
+     if (users.status === 201) {
        setState(3);
        setTimeout(() => setState(1), 1600)
        return;
      }
 
-   const helloUser = await fetch('/api/newUser', {
-     method: 'post',
-     body: JSON.stringify(data),
-   })
 
-   if (helloUser.status === 200) {
-     const username = data.name;
+   if (users.status === 202) {
      Router.push('/profile');
    }
  };
@@ -50,7 +45,7 @@ const Form = () => {
   return (
     <LoginForm>
       <Welcome>
-        <h1>Регистарция</h1>
+        <h1>Вход</h1>
       </Welcome>
       <FlexBox>
         <Input id="username" placeholder='Ваше имя' type='text' onChange={e => setName(e.target.value)}/>
@@ -59,12 +54,12 @@ const Form = () => {
         <Input id="password" placeholder='Пароль' type='password' onChange={e => setPassword(e.target.value)}/>
       </FlexBox>
       <FlexBox>
-        <Button onClick={handleSubmit}><ButtonContent>Создать!</ButtonContent></Button>
-        <Alert isHidden={state}/>
+        <Button onClick={handleSubmit}><ButtonContent>Войти!</ButtonContent></Button>
+        <AlertLogin isHidden={state}/>
       </FlexBox>
-      <SuggestWindow>Уже есть аккаунт? <p/> <Link href='/'><Button><ButtonContent>Вход</ButtonContent></Button></Link> </SuggestWindow>
+      <SuggestWindow>Еще нет аккаунта? <p/> <Link href='/registration'><Button><ButtonContent>Регистрация</ButtonContent></Button></Link> </SuggestWindow>
     </LoginForm>
   )
 }
 
-export {Form}
+export {FormLogin}
