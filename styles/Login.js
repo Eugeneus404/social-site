@@ -19,17 +19,18 @@ const LoginForm = styled.form`
 
 const Welcome = styled.div`
   padding: 5px;
-  color: #483D8B;
+  color: #766AD0;
 `;
 
 const Input = styled.input`
   text-decoration: none;
   display: inline-block;
   position: relative;
-  padding: 15px 30px;
+  padding: 10px 25px;
+  margin: 3px;
   color: #766AD0;
   border: 1px solid #3A374C;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
   transition: .3s linear;

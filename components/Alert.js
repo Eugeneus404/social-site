@@ -9,7 +9,7 @@ const Alert = (props) => {
   } else if (isHidden == 2) {
     return <Error>Введите имя и пароль!</Error>
   } else if (isHidden == 3) {
-    return <Error>Пользователь с таким именем уже существует!</Error>
+    return <Error>Имя занято!</Error>
   }
 }
 

@@ -1,12 +1,29 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Router from 'next/router';
 import {LoginForm, Welcome, Input, FlexBox} from '../styles/Login';
 import {ButtonContainer, Button, ButtonContent} from '../styles/Button';
 import {Alert} from './Alert';
 import {SuggestWindow} from '../styles/Suggest';
 
+
 const Form = () => {
+
+  useEffect(() => {
+  const listener = event => {
+    if (event.code === "Enter" || event.code === "NumpadEnter") {
+      event.preventDefault();
+      button.click();
+    }
+  };
+  
+  document.addEventListener("keydown", listener);
+  return () => {
+    document.removeEventListener("keydown", listener);
+  };
+}, []);
+
+
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [state, setState] = useState(1);
@@ -25,41 +42,34 @@ const Form = () => {
      password,
    };
 
-   const users = await fetch('/api/allUsers', {
-     method: 'post',
-     body: JSON.stringify(data)
-   });
-     if (users.status === 202) {
-       setState(3);
-       setTimeout(() => setState(1), 1600)
-       return;
-     }
-
-   const helloUser = await fetch('/api/newUser', {
+   const users = await fetch('/api/newUser', {
      method: 'post',
      body: JSON.stringify(data),
    })
 
-   if (helloUser.status === 200) {
+   if (users.status === 200) {
      const username = data.name;
      Router.push('/profile');
-   }
+   } else if (users.status === 201) {
+     setState(3);
+     setTimeout(() => setState(1), 1600)
+     return;
+  }
  };
-
 
   return (
     <LoginForm>
       <Welcome>
-        <h1>Регистарция</h1>
+        <h2>Регистарция</h2>
       </Welcome>
       <FlexBox>
-        <Input id="username" placeholder='Ваше имя' type='text' onChange={e => setName(e.target.value)}/>
+        <Input id="username" placeholder='Введите ваше имя' type='text' onChange={e => setName(e.target.value)}/>
       </FlexBox>
       <FlexBox>
-        <Input id="password" placeholder='Пароль' type='password' onChange={e => setPassword(e.target.value)}/>
+        <Input id="password" placeholder='Придумайте пароль' type='password' onChange={e => setPassword(e.target.value)}/>
       </FlexBox>
       <FlexBox>
-        <Button onClick={handleSubmit}><ButtonContent>Создать!</ButtonContent></Button>
+        <Button id="button" onClick={handleSubmit} type="submit"><ButtonContent type="submit">Создать!</ButtonContent></Button>
         <Alert isHidden={state}/>
       </FlexBox>
       <SuggestWindow>Уже есть аккаунт? <p/> <Link href='/'><Button><ButtonContent>Вход</ButtonContent></Button></Link> </SuggestWindow>

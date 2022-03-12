@@ -4,7 +4,7 @@ import {Form} from '../components/Form';
 
 const Index = () => {
   return (
-    <MainLayout title={'Registration'}>
+    <MainLayout title={'Sign Up'}>
       <Form/>
     </MainLayout>
   )

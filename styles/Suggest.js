@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const SuggestWindow = styled.div`
 display: block;
-width: 180px;
+width: 140px;
 border: 2px solid #3A374C;
 border-radius: 20px;
 padding: 20px;

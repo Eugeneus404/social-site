@@ -14,10 +14,10 @@ const Button = styled.a`
   text-decoration: none;
   display: inline-block;
   position: relative;
-  padding: 15px 30px;
+  padding: 10px 20px;
   color: #766AD0;
   border: 1px solid #3A374C;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
   transition: .3s linear;
